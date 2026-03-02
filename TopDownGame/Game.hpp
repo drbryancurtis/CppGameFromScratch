@@ -1,12 +1,11 @@
 #pragma once
-#include "Math.hpp"
 #include <SDL3/SDL.h>
+#include <vector>
+#include "Actor.hpp"
 
 class Game {
 public:
     Game();
-    ~Game();
-
     bool Initialize();
     void RunLoop();
     void Shutdown();
@@ -22,14 +21,10 @@ private:
     SDL_Window* m_Window;
     SDL_Renderer* m_Renderer;
     bool m_IsRunning;
-
-    // Time tracking
     uint64_t m_TicksCount;
 
-    // The Engine's "Registry"
-    std::vector<class Actor*> m_Actors;          // Active actors
-    std::vector<class Actor*> m_PendingActors;   // Actors waiting to be added
-    bool m_UpdatingActors;                       // Safety lock for the loop
+    std::vector<class Actor*> m_Actors;
+    std::vector<class Actor*> m_PendingActors;
+    class Player* m_Player;
+    bool m_UpdatingActors;
 };
-
-class Player* m_Player; // A pointer to our player actor
