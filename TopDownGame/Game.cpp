@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include <algorithm>
 
 Game::Game()
@@ -15,7 +16,8 @@ bool Game::Initialize() {
     if (!m_Renderer) return false;
 
     m_TicksCount = SDL_GetTicks();
-    m_Player = new Player(this); // This automatically calls AddActor
+    m_Player = new Player(this);
+    new Enemy(this);
     return true;
 }
 
@@ -55,10 +57,14 @@ void Game::GenerateOutput() {
     SDL_SetRenderDrawColor(m_Renderer, 0, 0, 255, 255);
     SDL_RenderClear(m_Renderer);
 
+    // Draw all Actors in the registry
     SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
-    Vector2 pos = m_Player->GetPosition();
-    SDL_FRect playerRect = { pos.x - 16, pos.y - 16, 32, 32 };
-    SDL_RenderFillRect(m_Renderer, &playerRect);
+    for (auto actor : m_Actors) {
+        Vector2 pos = actor->GetPosition();
+        // Make a 32x32 square centered on the actor
+        SDL_FRect rect = { pos.x - 16.0f, pos.y - 16.0f, 32.0f, 32.0f };
+        SDL_RenderFillRect(m_Renderer, &rect);
+    }
 
     SDL_RenderPresent(m_Renderer);
 }
