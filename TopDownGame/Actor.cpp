@@ -6,6 +6,7 @@ Actor::Actor(Game* game)
     , m_State(EActive)
     , m_Position({ 0.0f, 0.0f })
     , m_Scale(1.0f)
+    , m_Texture(nullptr) // Initialize to null
 {
     m_Game->AddActor(this);
 }

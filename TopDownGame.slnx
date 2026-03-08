@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="TopDownGame/TopDownGame.vcxproj" />
+  <Project Path="TopDownGame/TopDownGame.vcxproj" Id="d4eb5246-eb18-4c8c-96ed-d8cc63ad63b2" />
 </Solution>

@@ -2,6 +2,7 @@
 #include <SDL3/SDL.h>
 #include <vector>
 #include "Actor.hpp"
+#include "AssetManager.hpp"
 
 class Game {
 public:
@@ -12,6 +13,9 @@ public:
 
     void AddActor(class Actor* actor);
     void RemoveActor(class Actor* actor);
+
+    SDL_Renderer* GetRenderer() const { return m_Renderer; }
+    AssetManager* GetAssets() { return m_AssetManager; }
 
 private:
     void ProcessInput();
@@ -27,4 +31,6 @@ private:
     std::vector<class Actor*> m_PendingActors;
     class Player* m_Player;
     bool m_UpdatingActors;
+
+    AssetManager* m_AssetManager;
 };

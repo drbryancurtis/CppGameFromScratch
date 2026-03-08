@@ -1,0 +1,5 @@
+2026-03-08 14:51:30 [INFO] Logger initialized. File: GameLog.txt
+2026-03-08 14:51:30 [INFO] Systems initialized successfully.
+2026-03-08 14:51:30 [INFO] Loaded asset: Assets/Sprites/player.bmp
+2026-03-08 14:51:41 [INFO] Engine shutdown complete.
+2026-03-08 14:51:41 [INFO] Logger shutting down.

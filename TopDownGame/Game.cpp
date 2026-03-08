@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "Player.hpp"
 #include "Enemy.hpp"
+#include "Logger.hpp"
 #include <algorithm>
 
 Game::Game()
@@ -9,15 +10,33 @@ Game::Game()
 }
 
 bool Game::Initialize() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) return false;
+    Logger::Init("GameLog.txt"); // Start the logger first!
+
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        Logger::LogSDLError("SDL_Init failed");
+        return false;
+    }
+
     m_Window = SDL_CreateWindow("Spectral Engine", 1024, 768, 0);
-    if (!m_Window) return false;
+    if (!m_Window) {
+        Logger::LogSDLError("Window creation failed");
+        return false;
+    }
+
     m_Renderer = SDL_CreateRenderer(m_Window, NULL);
-    if (!m_Renderer) return false;
+    if (!m_Renderer) {
+        Logger::LogSDLError("Renderer creation failed");
+        return false;
+    }
+
+    m_AssetManager = new AssetManager(this);
+
+    Logger::Log(LogLevel::INFO, "Systems initialized successfully.");
 
     m_TicksCount = SDL_GetTicks();
     m_Player = new Player(this);
     new Enemy(this);
+
     return true;
 }
 
@@ -57,13 +76,19 @@ void Game::GenerateOutput() {
     SDL_SetRenderDrawColor(m_Renderer, 0, 0, 255, 255);
     SDL_RenderClear(m_Renderer);
 
-    // Draw all Actors in the registry
-    SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
     for (auto actor : m_Actors) {
         Vector2 pos = actor->GetPosition();
-        // Make a 32x32 square centered on the actor
         SDL_FRect rect = { pos.x - 16.0f, pos.y - 16.0f, 32.0f, 32.0f };
-        SDL_RenderFillRect(m_Renderer, &rect);
+
+        if (actor->GetTexture()) {
+            // Draw the texture
+            SDL_RenderTexture(m_Renderer, actor->GetTexture(), NULL, &rect);
+        }
+        else {
+            // Fallback square
+            SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
+            SDL_RenderFillRect(m_Renderer, &rect);
+        }
     }
 
     SDL_RenderPresent(m_Renderer);
@@ -91,6 +116,8 @@ void Game::RunLoop() {
 }
 
 void Game::Shutdown() {
+    delete m_AssetManager; // This will trigger the Clear() function
+
     // Delete all actors in the system
     while (!m_Actors.empty()) {
         delete m_Actors.back(); // The Actor destructor handles removing itself from the vector
@@ -99,4 +126,7 @@ void Game::Shutdown() {
     SDL_DestroyRenderer(m_Renderer);
     SDL_DestroyWindow(m_Window);
     SDL_Quit();
+
+    Logger::Log(LogLevel::INFO, "Engine shutdown complete.");
+    Logger::Shutdown(); // Close the file stream last
 }

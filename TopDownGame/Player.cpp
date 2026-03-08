@@ -7,6 +7,7 @@ Player::Player(Game* game)
     , m_Speed(400.0f)
 {
     SetPosition({ 512.0f, 384.0f });
+    m_Texture = m_Game->GetAssets()->GetTexture("Assets/Sprites/player.bmp");
 }
 
 void Player::ProcessKeyboard(const bool* state) {
