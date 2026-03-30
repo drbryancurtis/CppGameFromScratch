@@ -1,5 +1,6 @@
-2026-03-08 14:51:30 [INFO] Logger initialized. File: GameLog.txt
-2026-03-08 14:51:30 [INFO] Systems initialized successfully.
-2026-03-08 14:51:30 [INFO] Loaded asset: Assets/Sprites/player.bmp
-2026-03-08 14:51:41 [INFO] Engine shutdown complete.
-2026-03-08 14:51:41 [INFO] Logger shutting down.
+2026-03-29 20:27:01 [INFO] Logger initialized. File: GameLog.txt
+2026-03-29 20:27:01 [INFO] Systems initialized successfully.
+2026-03-29 20:27:01 [INFO] Loaded asset: Assets/Sprites/player.png
+2026-03-29 20:27:08 [INFO] Asset Manager: All textures destroyed.
+2026-03-29 20:27:08 [INFO] Engine shutdown complete.
+2026-03-29 20:27:08 [INFO] Logger shutting down.

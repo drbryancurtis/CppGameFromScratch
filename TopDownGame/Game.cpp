@@ -10,7 +10,7 @@ Game::Game()
 }
 
 bool Game::Initialize() {
-    Logger::Init("GameLog.txt"); // Start the logger first!
+    Logger::Init("GameLog.txt");
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         Logger::LogSDLError("SDL_Init failed");
